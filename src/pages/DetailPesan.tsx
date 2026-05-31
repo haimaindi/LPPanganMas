@@ -4,6 +4,7 @@ import { ArrowLeft, User, Building2, Phone, Mail, Archive, Trash2, CheckCircle, 
 import { motion } from 'motion/react';
 import Swal from 'sweetalert2';
 import { Contact } from '../types';
+import PageLoading from '../components/PageLoading';
 
 export default function DetailPesan() {
   const { id } = useParams();
@@ -89,7 +90,7 @@ export default function DetailPesan() {
 
   if (loading) return (
     <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-      <div className="h-[2rem] w-[2rem] border-4 border-[#01470b]/20 border-t-[#01470b] rounded-full animate-spin" />
+      <PageLoading />
     </div>
   );
 

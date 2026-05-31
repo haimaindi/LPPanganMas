@@ -9,6 +9,7 @@ import { ASSETS } from '../assets';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { Branch, BranchGalleryItem } from '../types';
+import PageLoading from '../components/PageLoading';
 
 // Fix for Leaflet default icon issues in React
 import markerIcon from 'leaflet/dist/images/marker-icon.png';
@@ -49,8 +50,12 @@ export default function CabangMalangPage() {
 
   if (loading || !branch) {
     return (
-      <div className="flex h-screen items-center justify-center bg-white">
-        <div className="h-12 w-12 animate-spin rounded-full border-4 border-[#01470b] border-t-transparent"></div>
+      <div className="min-h-screen bg-white font-sans">
+        <Navbar />
+        <main className="pt-[5rem] pb-16">
+          <PageLoading />
+        </main>
+        <Footer />
       </div>
     );
   }

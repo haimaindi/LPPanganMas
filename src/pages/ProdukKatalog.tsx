@@ -83,10 +83,18 @@ export default function ProdukKatalog() {
           </div>
 
           {/* Product Grid */}
-          <div className="grid grid-cols-1 gap-[2rem] sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+          <motion.div 
+            initial="hidden"
+            animate="visible"
+            variants={{
+              visible: { transition: { staggerChildren: 0.1 } },
+              hidden: {}
+            }}
+            className="grid grid-cols-1 gap-[2rem] sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
+          >
             {loading ? (
               Array(8).fill(0).map((_, i) => (
-                <div key={i} className="h-[25rem] animate-pulse rounded-[0.75rem] bg-gray-100" />
+                <div key={i} className="h-[25rem] animate-pulse rounded-[1.5rem] bg-gray-100" />
               ))
             ) : filteredProducts.length > 0 ? (
               filteredProducts.map((product) => (
@@ -97,7 +105,7 @@ export default function ProdukKatalog() {
                 <p className="text-xl text-gray-500">Tidak ada produk ditemukan dalam kategori ini.</p>
               </div>
             )}
-          </div>
+          </motion.div>
         </section>
       </main>
 

@@ -22,51 +22,51 @@ export default function ProductCard({ product }: ProductCardProps) {
   return (
     <>
       <motion.article 
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        className="group relative flex flex-col overflow-hidden rounded-[0.75rem] border border-[#eee] bg-white shadow-md transition-all hover:-translate-y-2 hover:shadow-xl"
+        variants={{
+          visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } },
+          hidden: { opacity: 0, y: 40 }
+        }}
+        className="group relative flex flex-col overflow-hidden rounded-[1.5rem] bg-white border border-gray-100 shadow-sm transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl"
       >
         {product.badge && (
-          <span className="absolute top-[0.75rem] left-[0.75rem] z-10 rounded-full bg-[#ff9f1c] px-[0.75rem] py-[0.25rem] text-[0.75rem] font-bold text-white uppercase">
+          <span className="absolute top-[1.25rem] left-[1.25rem] z-10 rounded-full bg-black/90 px-[1rem] py-[0.35rem] text-[0.7rem] font-bold tracking-widest text-white uppercase backdrop-blur-md">
             {product.badge}
           </span>
         )}
         
-        <div className="relative h-[13.75rem] w-full overflow-hidden">
+        <div className="relative h-[16rem] w-full overflow-hidden bg-gray-50">
+          <div className="absolute inset-0 bg-gradient-to-t from-gray-900/40 to-transparent opacity-0 transition-opacity duration-300 z-10 group-hover:opacity-100" />
           <img 
             src={product.image_url} 
             alt={product.title}
-            className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
+            className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
           />
         </div>
 
-        <div className="flex flex-grow flex-col p-[1rem] sm:p-[1.5rem]">
-          <span className="mb-[0.25rem] sm:mb-[0.5rem] text-[0.7rem] sm:text-[0.8rem] tracking-[0.0625rem] text-gray-500 uppercase">
+        <div className="flex flex-grow flex-col p-[1.5rem] sm:p-[2rem]">
+          <span className="mb-[0.5rem] text-[0.7rem] tracking-[0.1em] font-bold text-[#01470b] uppercase">
             {product.category}
           </span>
-          <h3 className="mb-[0.25rem] sm:mb-[0.5rem] text-[1rem] sm:text-[1.1rem] font-semibold text-gray-900">
+          <h3 className="mb-[0.75rem] text-[1.25rem] font-black text-gray-900 leading-tight">
             {product.title}
           </h3>
-          <p className="mt-0 mb-[0.75rem] sm:mb-2 line-clamp-2 text-[0.8rem] sm:text-[0.875rem] leading-snug sm:leading-relaxed text-gray-600">
+          <p className="mt-0 mb-[1.5rem] line-clamp-2 text-[0.875rem] leading-relaxed text-gray-500">
             {product.specs}
           </p>
 
-          <div className="mt-auto flex w-full gap-[0.5rem]">
+          <div className="mt-auto flex w-full gap-[0.75rem]">
             <button 
               onClick={() => setShowDetail(true)}
-              className="flex w-full items-center justify-center gap-[0.25rem] rounded-[0.375rem] border border-[#01470b] bg-white py-[0.5rem] sm:py-[0.625rem] text-[0.875rem] sm:text-[1rem] font-semibold text-[#01470b] transition-colors hover:bg-slate-200"
+              className="flex w-full items-center justify-center gap-[0.5rem] rounded-full border border-gray-200 bg-white py-[0.75rem] text-[0.875rem] font-bold text-gray-700 transition-all hover:bg-gray-50 hover:border-gray-300"
             >
-              <Info size={16} className="sm:h-[18px] sm:w-[18px]" />
-              Lihat
+              Detail
             </button>
             
             <button 
               onClick={() => setShowBranchDialog(true)}
-              className="flex w-full items-center justify-center gap-[0.25rem] rounded-[0.375rem] bg-[#01470b] py-[0.5rem] sm:py-[0.625rem] text-[0.875rem] sm:text-[1rem] font-semibold text-white transition-colors hover:bg-[#01600f]"
+              className="flex w-full items-center justify-center gap-[0.5rem] rounded-full bg-[#01470b] py-[0.75rem] text-[0.875rem] font-bold text-white transition-all hover:bg-black hover:shadow-lg"
             >
-              <ShoppingCart size={16} className="sm:h-[18px] sm:w-[18px]" />
-              Pesan
+              Order <span className="opacity-0 -translate-x-2 transition-all duration-300 group-hover:opacity-100 group-hover:translate-x-0">→</span>
             </button>
           </div>
         </div>

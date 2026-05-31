@@ -7,6 +7,8 @@ import Swal from 'sweetalert2';
 import ReactQuill from 'react-quill-new';
 import 'react-quill-new/dist/quill.snow.css';
 
+import PageLoading from '../components/PageLoading';
+
 const INITIAL_DATA: CompanyProfile = {
   heroTitle: 'Profil Perusahaan',
   heroTitleColor: '#ffffff',
@@ -119,7 +121,7 @@ export default function CompanyProfileForm() {
   if (loading) {
     return (
       <div className="flex h-screen w-full items-center justify-center bg-white">
-        <Loader2 className="h-8 w-8 animate-spin text-[#01470b]" />
+        <PageLoading />
       </div>
     );
   }

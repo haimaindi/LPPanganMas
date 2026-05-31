@@ -3,6 +3,7 @@ import { motion } from 'motion/react';
 import { CompanyProfile } from '../types';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
+import PageLoading from '../components/PageLoading';
 
 const INITIAL_DATA: CompanyProfile = {
   heroTitle: 'Profil Perusahaan',
@@ -42,8 +43,12 @@ export default function CompanyProfileDetail() {
 
   if (loading) {
     return (
-      <div className="flex h-screen w-full items-center justify-center bg-white">
-        <div className="h-8 w-8 animate-spin rounded-full border-4 border-[#01470b] border-t-transparent"></div>
+      <div className="min-h-screen bg-white">
+        <Navbar />
+        <main className="pt-[5rem]">
+          <PageLoading />
+        </main>
+        <Footer />
       </div>
     );
   }
