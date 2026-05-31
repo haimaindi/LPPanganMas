@@ -1,9 +1,9 @@
-@import url('https://fonts.googleapis.com/css2?family=General+Sans:wght@300;400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Jakarta+Plus+Sans:wght@300;400;500;600;700;800&display=swap');
 @import url('https://unpkg.com/leaflet@1.9.4/dist/leaflet.css');
 @import "tailwindcss";
 
 @theme {
-  --font-sans: "General Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Jakarta Plus Sans", ui-sans-serif, system-ui, sans-serif;
   --color-primary: #01470b;
 }
 

@@ -74,12 +74,9 @@ export default function Hero() {
                     <div className="flex flex-wrap gap-[1.5rem]">
                       <motion.a
                         href={slides[current].cta_url}
-                        whileHover={{ scale: 1.05 }}
-                        whileTap={{ scale: 0.95 }}
-                        className="inline-flex items-center gap-[1rem] rounded-full bg-white px-[3rem] py-[1.2rem] font-bold text-[#01470b] shadow-2xl transition-all hover:bg-[#026312] hover:text-white"
+                        className="group inline-flex items-center gap-[0.5rem] rounded-[1rem] bg-[#ffffff] outline outline-2 outline-[#ffffff] outline-offset-[4px] px-[3rem] py-[1.2rem] font-bold text-[#01470b] transition-all duration-300 hover:scale-[1.05] hover:bg-[#fc9403] hover:outline-transparent hover:outline-offset-0"
                       >
                         {slides[current].cta_text}
-                        <ArrowRight size={22} />
                       </motion.a>
                     </div>
                   </motion.div>

@@ -61,19 +61,19 @@ export default function ClientMarquee() {
   }, [clients]);
 
   return (
-    <section className="bg-white py-[6rem] sm:py-[8rem] overflow-hidden">
+    <section className="bg-white pt-[4rem] pb-[3rem] sm:pt-[5rem] sm:pb-[4rem] overflow-hidden">
       <motion.div 
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-100px" }}
         transition={{ duration: 0.8 }}
-        className="mb-[5rem] text-center px-[1.5rem]"
+        className="mb-[3rem] sm:mb-[4rem] text-center px-[1.5rem]"
       >
-        <span className="mb-[1rem] inline-block text-[0.875rem] font-bold uppercase tracking-[0.2em] text-[#01470b]">
+        <span className="mb-[1rem] inline-block text-[0.875rem] font-bold leading-none uppercase tracking-[0.2em] text-[#01470b]">
           Kepercayaan Berharga
         </span>
         <h2 className="text-[2rem] font-black text-gray-900 md:text-[3rem] tracking-tight leading-tight">
-          Mitra <span className="text-gray-400">Strategis</span>
+          Mitra <span className="text-[#fc9403]">Strategis</span>
         </h2>
       </motion.div>
 

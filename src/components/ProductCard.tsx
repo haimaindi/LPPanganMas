@@ -29,7 +29,7 @@ export default function ProductCard({ product }: ProductCardProps) {
         className="group relative flex flex-col overflow-hidden rounded-[1.5rem] bg-white border border-gray-100 shadow-sm transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl"
       >
         {product.badge && (
-          <span className="absolute top-[1.25rem] left-[1.25rem] z-10 rounded-full bg-black/90 px-[1rem] py-[0.35rem] text-[0.7rem] font-bold tracking-widest text-white uppercase backdrop-blur-md">
+          <span className="absolute top-[1.25rem] left-[1.25rem] z-10 rounded-full bg-[#01470b] px-[1rem] py-[0.35rem] text-[0.7rem] font-bold tracking-widest text-white uppercase backdrop-blur-md">
             {product.badge}
           </span>
         )}
@@ -57,16 +57,16 @@ export default function ProductCard({ product }: ProductCardProps) {
           <div className="mt-auto flex w-full gap-[0.75rem]">
             <button 
               onClick={() => setShowDetail(true)}
-              className="flex w-full items-center justify-center gap-[0.5rem] rounded-full border border-gray-200 bg-white py-[0.75rem] text-[0.875rem] font-bold text-gray-700 transition-all hover:bg-gray-50 hover:border-gray-300"
+              className="flex w-full items-center justify-center gap-[0.5rem] rounded-[1rem] border-2 border-gray-200 bg-white py-[0.75rem] text-[0.875rem] font-bold text-gray-700 transition-all duration-300 hover:scale-[1.05] hover:bg-gray-50 hover:border-gray-300"
             >
-              Detail
+              Lihat
             </button>
             
             <button 
               onClick={() => setShowBranchDialog(true)}
-              className="flex w-full items-center justify-center gap-[0.5rem] rounded-full bg-[#01470b] py-[0.75rem] text-[0.875rem] font-bold text-white transition-all hover:bg-black hover:shadow-lg"
+              className="group flex w-full items-center justify-center gap-[0.5rem] rounded-[1rem] bg-[#fc9403] outline outline-2 outline-[#fc9403] outline-offset-[2px] py-[0.75rem] text-[0.875rem] font-bold text-white transition-all duration-300 hover:scale-[1.05] hover:bg-[#01470b] hover:outline-transparent hover:outline-offset-0 hover:shadow-lg"
             >
-              Order <span className="opacity-0 -translate-x-2 transition-all duration-300 group-hover:opacity-100 group-hover:translate-x-0">→</span>
+              Pesan 
             </button>
           </div>
         </div>

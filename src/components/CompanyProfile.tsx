@@ -41,102 +41,75 @@ export default function CompanyProfile() {
   }
 
   return (
-    <div className="w-full bg-slate-50/50 border-t border-gray-100">
-      <section className="mx-auto max-w-[85rem] px-[1.5rem] sm:px-[3rem] py-[8rem] lg:py-[10rem]">
-        {/* Header and Hero Image Split */}
-        <div className="flex flex-col lg:flex-row gap-[4rem] lg:gap-[6rem] items-center mb-[6rem]">
-        
-        <div className="w-full lg:w-[45%] flex flex-col gap-[2.5rem]">
-          <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
-          >
-            <h2 className="text-[3rem] text-[#01470b] lg:text-[4.5rem] font-black leading-[1.05] tracking-tight text-gray-900 break-words">
-              {profile.heroTitle}
-            </h2>
-          </motion.div>
-
-          <motion.div
-             initial={{ opacity: 0, y: 20 }}
-             whileInView={{ opacity: 1, y: 0 }}
-             viewport={{ once: true, margin: "-100px" }}
-             transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
-          >
-            <p className="text-[1.125rem] lg:text-[1.25rem] text-gray-500 font-medium leading-relaxed max-w-[35rem]">
-              Inovasi tiada henti untuk memberikan solusi agrikultur berkelanjutan bagi bangsa dan masa depan yang lebih hijau.
-            </p>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.8, ease: "easeOut", delay: 0.3 }}
-          >
-            <Link to="/profil" className="group relative inline-flex items-center gap-[1rem] rounded-full bg-gray-900 px-[2.5rem] py-[1.25rem] font-bold text-white overflow-hidden transition-all hover:bg-[#01470b]">
-              <span className="relative z-10 transition-transform duration-300 group-hover:-translate-x-2">Jelajahi Profil</span>
-              <span className="relative z-10 opacity-0 -translate-x-4 transition-all duration-300 group-hover:opacity-100 group-hover:translate-x-0">
-                →
-              </span>
-            </Link>
-          </motion.div>
-        </div>
-
-        <motion.div 
-          initial={{ opacity: 0, scale: 0.95 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
-          className="w-full lg:w-[55%] relative"
+    <section className="mx-auto max-w-[75rem] px-[2rem] pt-[5rem] pb-[2rem] sm:pb-[3rem]">
+      {/* Header */}
+      <div className="mb-[3rem] flex flex-col justify-between gap-[1.5rem] md:flex-row md:items-start">
+        <motion.h2 
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="max-w-[40rem] text-[2.5rem] leading-[1.1] font-black tracking-tight text-black md:text-[3.5rem] break-words"
         >
-          <div className="absolute inset-0 -translate-x-4 translate-y-4 rounded-[2rem] bg-[#01470b]/10 -z-10" />
-          <div className="aspect-[4/3] w-full overflow-hidden rounded-[2rem] shadow-2xl">
-            <img 
-              src={profile.heroImage} 
-              alt="Agriculture solutions" 
-              referrerPolicy="no-referrer"
-              className="h-full w-full object-cover transition-transform duration-700 hover:scale-[1.03]"
-            />
-          </div>
-        </motion.div>
-
+          {profile.heroTitle}
+        </motion.h2>
+        <Link to="/profil">
+          <motion.button 
+            initial={{ opacity: 0, scale: 0.9 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            className="group inline-flex h-fit items-center gap-[0.5rem] rounded-[1rem] bg-[#fc9403] outline outline-2 outline-[#fc9403] outline-offset-[4px] px-[2rem] py-[1rem] font-bold text-white transition-all duration-300 hover:scale-[1.05] hover:bg-[#01470b] hover:outline-transparent hover:outline-offset-0 shrink-0"
+          >
+            Profil
+          </motion.button>
+        </Link>
       </div>
 
-      {/* Description Layout */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-[4rem] lg:gap-[8rem] items-start">
+      {/* Main Image */}
+      <motion.div 
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ delay: 0.2 }}
+        className="relative mb-[3rem] aspect-[16/9] overflow-hidden rounded-[1.5rem]"
+      >
+        <img 
+          src={profile.heroImage} 
+          alt="Agriculture solutions" 
+          referrerPolicy="no-referrer"
+          className="h-full w-full object-cover"
+        />
+      </motion.div>
+
+      {/* Description Columns */}
+      <div className="grid grid-cols-1 gap-[3rem] md:grid-cols-2">
         {/* Left: Vision */}
         <motion.div 
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.8, ease: "easeOut", delay: 0.4 }}
-          className="relative pt-[2rem]"
+          initial={{ opacity: 0, x: -20 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.4 }}
+          className="overflow-hidden break-words"
         >
-          <div className="absolute top-0 left-0 w-[3rem] h-[0.25rem] bg-[#01470b] rounded-full" />
-          <h3 className="mb-[1.5rem] text-[0.875rem] font-bold uppercase tracking-[0.2em] text-gray-400">Visi Kami</h3>
-          <p className="text-[1.5rem] lg:text-[1.75rem] font-medium leading-[1.4] text-gray-900 tracking-tight">
+          <h3 className="mb-4 text-xs font-bold uppercase tracking-widest text-[#01470b]">Vision</h3>
+          <p className="text-[1.25rem] font-medium leading-relaxed text-black">
             {stripHtml(profile.visionText)}
           </p>
         </motion.div>
-        
+
         {/* Right: Description (Truncated) */}
         <motion.div 
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.8, ease: "easeOut", delay: 0.5 }}
-          className="relative pt-[2rem]"
+          initial={{ opacity: 0, x: 20 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.6 }}
+          className="overflow-hidden break-words"
         >
-          <div className="absolute top-0 left-0 w-[3rem] h-[0.25rem] bg-gray-200 rounded-full" />
-          <h3 className="mb-[1.5rem] text-[0.875rem] font-bold uppercase tracking-[0.2em] text-gray-400">Tentang Kami</h3>
-          <p className="text-[1.125rem] leading-[1.8] text-gray-600 line-clamp-5">
+          <h3 className="mb-4 text-xs font-bold uppercase tracking-widest text-[#01470b]">About Us</h3>
+          <p className="text-[1rem] leading-[1.6] text-black line-clamp-4">
             {stripHtml(profile.aboutContent)}
           </p>
         </motion.div>
       </div>
     </section>
-    </div>
   );
 }

@@ -41,7 +41,7 @@ export default function LandingPage() {
         <CompanyProfile />
 
         {!isRestricted && (
-          <section id="produk" className="relative w-full overflow-hidden bg-gray-50 py-[6rem] sm:py-[10rem]">
+          <section id="produk" className="relative w-full overflow-hidden bg-gray-50 pt-[3rem] pb-[6rem] sm:pt-[4rem] sm:pb-[8rem]">
             {/* Background minimal gradients */}
             <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-gray-300 to-transparent" />
             
@@ -58,7 +58,7 @@ export default function LandingPage() {
                       Produk <span className="text-[#01470b]">Unggulan</span>
                     </h2>
                     <p className="mt-[1.5rem] text-[1.125rem] leading-relaxed text-gray-500 font-medium">
-                      Temukan koleksi produk organik premium pilihan kami yang dirancang untuk mendukung kesehatan dan gaya hidup Anda.
+                      Temukan koleksi produk terbaik kami sesuai kebutuhan bisnis atau pribadi Anda.
                     </p>
                   </motion.div>
                 </div>
@@ -68,11 +68,9 @@ export default function LandingPage() {
                   viewport={{ once: true, margin: "-100px" }}
                   transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
                 >
-                  <Link to="/produk" className="group relative inline-flex items-center gap-[1rem] rounded-full bg-[#01470b] px-[2rem] py-[1rem] font-bold text-white overflow-hidden transition-all hover:bg-[#003307]">
-                    <span className="relative z-10 transition-transform duration-300 group-hover:-translate-x-2">Lihat Semua Katalog</span>
-                    <span className="relative z-10 opacity-0 -translate-x-4 transition-all duration-300 group-hover:opacity-100 group-hover:translate-x-0">
-                      →
-                    </span>
+                  <Link to="/produk" className="group relative inline-flex items-center gap-[1rem] rounded-[1rem] bg-[#fc9403] outline outline-2 outline-[#fc9403] outline-offset-[4px] px-[2rem] py-[1rem] font-bold text-white overflow-hidden transition-all duration-300 hover:scale-[1.05] hover:bg-[#01470b] hover:outline-transparent hover:outline-offset-0">
+                    <span className="text-center justify-center relative z-10 transition-transform duration-300 ">Lihat Semua Katalog</span>
+
                   </Link>
                 </motion.div>
               </div>

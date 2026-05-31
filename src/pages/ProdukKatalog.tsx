@@ -64,9 +64,9 @@ export default function ProdukKatalog() {
               <button
                 key={cat}
                 onClick={() => setActiveCategory(cat)}
-                className={`rounded-full px-6 py-2 text-sm font-semibold transition-all ${
+                className={`rounded-[0.75rem] px-6 py-2 text-sm font-bold transition-all duration-300 ${
                   activeCategory === cat
-                    ? 'bg-[#01470b] text-white shadow-lg'
+                    ? 'bg-[#fc9403] text-white outline outline-2 outline-offset-[2px] outline-[#fc9403] hover:scale-[1.05] hover:bg-[#01470b] hover:outline-transparent hover:outline-offset-0'
                     : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
                 }`}
               >
