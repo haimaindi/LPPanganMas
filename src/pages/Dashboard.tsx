@@ -130,7 +130,7 @@ export default function Dashboard() {
     if (active.id !== over?.id) {
       const oldIndex = filteredProducts.findIndex((p) => p.id === active.id);
       const newIndex = filteredProducts.findIndex((p) => p.id === over.id);
-      const newOrderedProducts = arrayMove(filteredProducts, oldIndex, newIndex);
+      const newOrderedProducts = arrayMove(filteredProducts, oldIndex, newIndex) as Product[];
       
       // Update local state
       setProducts(prev => {

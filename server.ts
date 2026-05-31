@@ -1,6 +1,6 @@
 import express, { Request, Response, NextFunction } from "express";
 import path from "path";
-import { createClient } from "@libsql/client";
+import { createClient } from "@libsql/client/web";
 import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
 import dotenv from "dotenv";
 import multer from "multer";
@@ -48,15 +48,20 @@ const db = createClient({
 });
 
 // Tigris S3 Client
-const s3 = new S3Client({
-  region: "auto",
-  endpoint: process.env.TIGRIS_STORAGE_ENDPOINT || "https://t3.storage.dev",
-  credentials: {
-    accessKeyId: process.env.TIGRIS_STORAGE_ACCESS_KEY_ID || "placeholder",
-    secretAccessKey: process.env.TIGRIS_STORAGE_SECRET_ACCESS_KEY || "placeholder",
-  },
-  forcePathStyle: true, // WAJIB untuk Tigris sesuai Guide/Tigris.md
-});
+let s3: S3Client | null = null;
+try {
+  s3 = new S3Client({
+    region: "auto",
+    endpoint: process.env.TIGRIS_STORAGE_ENDPOINT || "https://t3.storage.dev",
+    credentials: {
+      accessKeyId: process.env.TIGRIS_STORAGE_ACCESS_KEY_ID || "placeholder",
+      secretAccessKey: process.env.TIGRIS_STORAGE_SECRET_ACCESS_KEY || "placeholder",
+    },
+    forcePathStyle: true, // WAJIB untuk Tigris sesuai Guide/Tigris.md
+  });
+} catch (e) {
+  console.error("Failed to initialize S3Client:", e);
+}
 
 app.use(express.json());
 
@@ -303,13 +308,26 @@ async function initDB() {
   }
 }
 
-initDB();
+// initDB() is now called in startServer()
+
+// Initialize DB manually via API
+app.get("/api/init-db", async (req, res) => {
+  try {
+    await initDB();
+    res.json({ message: "Database initialized successfully" });
+  } catch (error) {
+    res.status(500).json({ error: "Failed to initialize db: " + (error as any).message });
+  }
+});
 
 // API ROUTES
 
 // Upload to Tigris
 app.post("/api/upload", upload.single("image"), async (req, res) => {
   try {
+    if (!s3) {
+      return res.status(500).json({ error: "S3 Client not configured" });
+    }
     if (!req.file) {
       return res.status(400).json({ error: "No file uploaded" });
     }
@@ -624,6 +642,7 @@ app.post("/api/login", async (req, res) => {
 });
 
 async function startServer() {
+  await initDB();
   if (process.env.NODE_ENV !== "production") {
     const { createServer: createViteServer } = await import("vite");
     const vite = await createViteServer({
