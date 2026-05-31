@@ -1,0 +1,37 @@
+@import url('https://fonts.googleapis.com/css2?family=General+Sans:wght@300;400;500;600;700;800&display=swap');
+@import url('https://unpkg.com/leaflet@1.9.4/dist/leaflet.css');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "General Sans", ui-sans-serif, system-ui, sans-serif;
+  --color-primary: #01470b;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+/* Rich Text Editor Customizations */
+.admin-rich-editor .ql-container {
+  font-size: 1.125rem;
+  font-family: inherit;
+  border-bottom-left-radius: 0.75rem;
+  border-bottom-right-radius: 0.75rem;
+  background: #f9fafb;
+}
+
+.admin-rich-editor .ql-toolbar {
+  border-top-left-radius: 0.75rem;
+  border-top-right-radius: 0.75rem;
+  background: white;
+}
+
+.admin-rich-editor.small-editor .ql-container {
+  min-height: 200px;
+}
+
+.admin-rich-editor:not(.small-editor) .ql-container {
+  min-height: 300px;
+}

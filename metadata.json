@@ -1,0 +1,8 @@
+{
+  "name": "Pangan Mas Abadi",
+  "description": "Pangan Mas Abadi adalah perusahaan yang bergerak dibidang distrbusi produk pertanian skala nasional",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API" 
+  ]
+}
