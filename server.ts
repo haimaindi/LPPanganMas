@@ -1,4 +1,4 @@
-import express from "express";
+import express, { Request, Response, NextFunction } from "express";
 import path from "path";
 import { createClient } from "@libsql/client";
 import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
@@ -11,13 +11,40 @@ dotenv.config();
 const app = express();
 const PORT = 3000;
 
+// Async handler wrapper to catch unhandled promise rejections
+const methods = ['get', 'post', 'put', 'delete', 'patch'] as const;
+for (const method of methods) {
+  const original = app[method].bind(app);
+  app[method] = function (path: any, ...handlers: any[]) {
+    const wrappedHandlers = handlers.map((h: any) => {
+      if (typeof h === 'function') {
+        return (req: Request, res: Response, next: NextFunction) => {
+          try {
+            const result = h(req, res, next);
+            if (result instanceof Promise) {
+              result.catch(next);
+            }
+          } catch (err) {
+            next(err);
+          }
+        };
+      }
+      return h;
+    });
+    return original(path, ...wrappedHandlers);
+  } as any;
+}
+
 // Multer setup for memory storage
 const upload = multer({ storage: multer.memoryStorage() });
 
+const isVercel = process.env.VERCEL === "1";
+const dbUrl = process.env.VITE_TURSO_DB_URL || (isVercel ? "libsql://dummy-for-build.turso.io" : "file:local.db");
+
 // Turso Database Client
 const db = createClient({
-  url: process.env.VITE_TURSO_DB_URL || "file:local.db",
-  authToken: process.env.VITE_TURSO_DB_AUTH_TOKEN,
+  url: dbUrl,
+  authToken: process.env.VITE_TURSO_DB_AUTH_TOKEN || "dummy",
 });
 
 // Tigris S3 Client
