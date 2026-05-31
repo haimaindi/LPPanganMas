@@ -69,10 +69,10 @@ export default function ClientMarquee() {
         transition={{ duration: 0.8 }}
         className="mb-[3rem] sm:mb-[4rem] text-center px-[1.5rem]"
       >
-        <span className="mb-[1rem] inline-block text-[0.875rem] font-bold leading-none uppercase tracking-[0.2em] text-[#01470b]">
+        <span className="mb-[1rem] inline-block text-[0.875rem] font-bold leading-none uppercase tracking-[0.2em] text-[#000000]">
           Kepercayaan Berharga
         </span>
-        <h2 className="text-[2rem] font-black text-gray-900 md:text-[3rem] tracking-tight leading-tight">
+        <h2 className="text-[2rem] font-black text-[#01470b] md:text-[3rem] tracking-tight leading-tight">
           Mitra <span className="text-[#fc9403]">Strategis</span>
         </h2>
       </motion.div>
