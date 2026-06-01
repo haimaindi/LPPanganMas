@@ -1,8 +1,9 @@
 import express, { Request, Response, NextFunction } from "express";
 import path from "path";
 import { createClient } from "@libsql/client/web";
-import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
+import { S3Client, PutObjectCommand, GetObjectCommand } from "@aws-sdk/client-s3";
 import dotenv from "dotenv";
+import type { Readable } from "stream";
 import multer from "multer";
 import crypto from "crypto";
 
@@ -322,6 +323,42 @@ app.get("/api/init-db", async (req, res) => {
 
 // API ROUTES
 
+// Read image from private Tigris bucket
+app.get("/api/images/:key", async (req, res) => {
+  try {
+    if (!s3) {
+      return res.status(500).json({ error: "S3 Client not configured" });
+    }
+
+    const { key } = req.params;
+    const bucketName = process.env.TIGRIS_STORAGE_BUCKET || "pangan-mas-abadi";
+
+    const response = await s3.send(new GetObjectCommand({
+      Bucket: bucketName,
+      Key: key,
+    }));
+
+    if (response.ContentType) res.setHeader("Content-Type", response.ContentType);
+    if (response.ContentLength) res.setHeader("Content-Length", response.ContentLength);
+    // Cache di browser agar akses kembali lebih cepat
+    res.setHeader("Cache-Control", "public, max-age=31536000, immutable");
+
+    if (response.Body) {
+      // Pipe stream file langsung ke client
+      (response.Body as Readable).pipe(res);
+    } else {
+      res.status(404).send("File tidak ditemukan");
+    }
+  } catch (error: any) {
+    if (error.name === "NoSuchKey") {
+      res.status(404).send("File tidak ditemukan");
+    } else {
+      console.error("Error fetching image from Tigris:", error);
+      res.status(500).send("Gagal mengambil gambar");
+    }
+  }
+});
+
 // Upload to Tigris
 app.post("/api/upload", upload.single("image"), async (req, res) => {
   try {
@@ -343,8 +380,9 @@ app.post("/api/upload", upload.single("image"), async (req, res) => {
       ContentType: req.file.mimetype,
     }));
 
-    // Sesuai Guide/Tigris.md: Gunakan format subdomain .t3.tigrisfiles.io untuk akses publik
-    const imageUrl = `https://${bucketName}.t3.tigrisfiles.io/${fileName}`;
+    // Karena bucket direstriksi menjadi Private, kita kembalikan URL endpoint lokal (proxy)
+    // yang akan melayani gambar ini menggunakan kredensial SDK backend.
+    const imageUrl = `/api/images/${fileName}`;
     res.json({ imageUrl });
   } catch (error) {
     console.error("Upload Error:", error);
