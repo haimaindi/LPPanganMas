@@ -3,4 +3,4 @@ Allow: /
 Disallow: /admin/
 Disallow: /api/
 
-Sitemap: https://panganmasabadi.com/sitemap.xml
+Sitemap: https://www.panganemasabadi.id/sitemap.xml
