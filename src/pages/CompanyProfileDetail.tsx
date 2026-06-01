@@ -4,6 +4,7 @@ import { CompanyProfile } from '../types';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import PageLoading from '../components/PageLoading';
+import { getAbsoluteUrl } from '../lib/utils';
 
 const INITIAL_DATA: CompanyProfile = {
   heroTitle: 'Profil Perusahaan',
@@ -101,7 +102,7 @@ export default function CompanyProfileDetail() {
                 />
                 {profile.portfolioLink && (
                   <a 
-                    href={profile.portfolioLink} 
+                    href={getAbsoluteUrl(profile.portfolioLink)} 
                     target="_blank" 
                     rel="noopener noreferrer"
                     className="inline-block mt-8 bg-[#01470b] text-white px-6 py-3 rounded-full font-bold hover:bg-[#026312] transition-colors"

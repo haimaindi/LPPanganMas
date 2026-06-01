@@ -364,14 +364,27 @@ export default function ProductFormModal({ isOpen, onClose, onRefresh, editingPr
                   </div>
                 </div>
                 
-                <div className="flex flex-col gap-[0.5rem]">
-                   <label className="text-[0.875rem] font-semibold text-gray-700">Badge (Opsional)</label>
-                   <input 
-                    value={formData.badge}
-                    onChange={e => setFormData({...formData, badge: e.target.value})}
-                    className="rounded-[0.75rem] border border-gray-200 bg-gray-50 px-[1.25rem] py-[0.875rem] outline-none transition-all focus:border-primary focus:bg-white focus:ring-2 focus:ring-primary/20"
-                    placeholder="e.g. Best Seller, New Arrival"
-                  />
+                <div className="grid grid-cols-2 gap-[1rem]">
+                  <div className="flex flex-col gap-[0.5rem]">
+                     <label className="text-[0.875rem] font-semibold text-gray-700">Badge (Opsional)</label>
+                     <input 
+                      value={formData.badge}
+                      onChange={e => setFormData({...formData, badge: e.target.value})}
+                      className="rounded-[0.75rem] border border-gray-200 bg-gray-50 px-[1.25rem] py-[0.875rem] outline-none transition-all focus:border-primary focus:bg-white focus:ring-2 focus:ring-primary/20"
+                      placeholder="e.g. Best Seller, New Arrival"
+                    />
+                  </div>
+                  <div className="flex flex-col gap-[0.5rem]">
+                     <label className="text-[0.875rem] font-semibold text-gray-700">Status Produk</label>
+                     <select 
+                      value={formData.isActive ? 'true' : 'false'}
+                      onChange={e => setFormData({...formData, isActive: e.target.value === 'true'})}
+                      className="rounded-[0.75rem] border border-gray-200 bg-gray-50 px-[1.25rem] py-[0.875rem] outline-none transition-all focus:border-primary focus:bg-white focus:ring-2 focus:ring-primary/20"
+                    >
+                      <option value="true">Aktif</option>
+                      <option value="false">Non Aktif</option>
+                    </select>
+                  </div>
                 </div>
 
                 <div className="flex flex-col gap-[0.5rem]">
