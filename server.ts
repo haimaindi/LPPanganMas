@@ -7,6 +7,8 @@ import type { Readable } from "stream";
 import multer from "multer";
 import crypto from "crypto";
 
+import cron from "node-cron";
+
 dotenv.config();
 
 const app = express();
@@ -208,6 +210,13 @@ async function initDB() {
         await db.execute("ALTER TABLE company_profile ADD COLUMN contact_email TEXT");
       }
     } catch(e) {}
+
+    await db.execute(`
+      CREATE TABLE IF NOT EXISTS pingtable (
+        id INTEGER PRIMARY KEY,
+        last_ping DATETIME
+      )
+    `);
 
     // Add company profile if empty
     const profileCount = await db.execute("SELECT COUNT(*) as count FROM company_profile");
@@ -689,6 +698,22 @@ app.delete("/api/contacts/:id", async (req, res) => {
   res.json({ message: "Message deleted" });
 });
 
+// API endpoint for Vercel Cron
+app.get("/api/ping-db", async (req, res) => {
+  try {
+    console.log("API: Pinging database to keep it alive...");
+    await db.execute(`
+      INSERT INTO pingtable (id, last_ping) VALUES (1, CURRENT_TIMESTAMP)
+      ON CONFLICT(id) DO UPDATE SET last_ping = CURRENT_TIMESTAMP
+    `);
+    console.log("API: Database ping successful.");
+    res.json({ success: true, message: "Ping successful" });
+  } catch (e: any) {
+    console.error("API: Database ping failed:", e);
+    res.status(500).json({ success: false, error: e.message });
+  }
+});
+
 // Vite middleware setup
 app.post("/api/login", async (req, res) => {
   const { password } = req.body;
@@ -722,6 +747,20 @@ async function startServer() {
       res.sendFile(path.join(distPath, "index.html"));
     });
   }
+
+  // Cron job for pinging the database every day at 23:59
+  cron.schedule("59 23 * * *", async () => {
+    try {
+      console.log("Cron: Pinging database to keep it alive...");
+      await db.execute(`
+        INSERT INTO pingtable (id, last_ping) VALUES (1, CURRENT_TIMESTAMP)
+        ON CONFLICT(id) DO UPDATE SET last_ping = CURRENT_TIMESTAMP
+      `);
+      console.log("Cron: Database ping successful.");
+    } catch (e) {
+      console.error("Cron: Database ping failed:", e);
+    }
+  });
 
   app.listen(PORT, "0.0.0.0", () => {
     console.log(`Server running on http://localhost:${PORT}`);
