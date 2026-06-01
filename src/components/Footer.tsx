@@ -1,8 +1,19 @@
 import { Facebook, Instagram, Linkedin, MapPin, Phone, Mail } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { ASSETS } from '../assets';
+import { useEffect, useState } from 'react';
+import { CompanyProfile } from '../types';
 
 export default function Footer({ isRestricted }: { isRestricted?: boolean }) {
+  const [profile, setProfile] = useState<CompanyProfile | null>(null);
+
+  useEffect(() => {
+    fetch('/api/profile')
+      .then(res => res.json())
+      .then(data => setProfile(data))
+      .catch(console.error);
+  }, []);
+
   const footerLinks = [
     { label: 'Beranda', href: '/' },
     /*{ label: 'Cabang', href: '#' },*/
@@ -26,7 +37,7 @@ export default function Footer({ isRestricted }: { isRestricted?: boolean }) {
             <span className="text-[1.25rem] font-bold text-white">PT Pangan Mas Abadi</span>
           </div>
           <p className="text-[0.95rem] text-white/80">
-            Mitra terpercaya dalam penyediaan kebutuhan pangan segar dan berkualitas untuk keluarga Indonesia.
+            {profile?.footerText || 'Mitra terpercaya dalam penyediaan kebutuhan pangan segar dan berkualitas untuk keluarga Indonesia.'}
           </p>
           <div className="hidden flex gap-[1rem]">
             {[Facebook, Instagram, Linkedin].map((Icon, idx) => (
@@ -57,9 +68,9 @@ export default function Footer({ isRestricted }: { isRestricted?: boolean }) {
             Kontak
           </h3>
           <ul className="flex flex-col gap-[0.8rem] text-[0.95rem] text-white/80">
-            <li className="flex gap-[0.625rem]"><MapPin size={18} /> Jl. Raya Pangan No. 88, Jakarta</li>
-            <li className="flex gap-[0.625rem]"><Phone size={18} /> +62 21 5555 8888</li>
-            <li className="flex gap-[0.625rem]"><Mail size={18} /> info@panganmasabadi.co.id</li>
+            <li className="flex gap-[0.625rem]"><MapPin size={18} /> {profile?.contactAddress || 'Jl. Raya Pangan No. 88, Jakarta'}</li>
+            <li className="flex gap-[0.625rem]"><Phone size={18} /> {profile?.contactPhone || '+62 21 5555 8888'}</li>
+            <li className="flex gap-[0.625rem]"><Mail size={18} /> {profile?.contactEmail || 'info@panganmasabadi.co.id'}</li>
           </ul>
         </div>
       </div>

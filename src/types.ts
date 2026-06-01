@@ -51,6 +51,10 @@ export interface CompanyProfile {
   missionTitle: string;
   missionContent: string;
   portfolioLink?: string;
+  footerText?: string;
+  contactAddress?: string;
+  contactPhone?: string;
+  contactEmail?: string;
 }
 
 export interface Branch {

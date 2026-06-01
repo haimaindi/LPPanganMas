@@ -287,6 +287,58 @@ export default function CompanyProfileForm() {
                 placeholder="https://..."
               />
             </div>
+            
+            {/* Footer & Contact Section */}
+            <div className="rounded-[1.5rem] border border-gray-100 p-[2rem] shadow-sm bg-white">
+              <h3 className="text-xl font-bold text-[#01470b] mb-4">Pengaturan Footer & Kontak</h3>
+              
+              <div className="space-y-4">
+                <div>
+                  <label className="block text-sm font-bold text-gray-700 mb-2">Teks Deskripsi Footer</label>
+                  <textarea 
+                    value={data.footerText || ''}
+                    onChange={(e) => setData({...data, footerText: e.target.value})}
+                    className="w-full p-3 rounded-lg border border-gray-200 outline-none focus:ring-2 focus:ring-[#01470b]"
+                    placeholder="Mitra terpercaya dalam penyediaan..."
+                    rows={3}
+                  />
+                </div>
+                
+                <div>
+                  <label className="block text-sm font-bold text-gray-700 mb-2">Alamat Kontak</label>
+                  <input 
+                    type="text"
+                    value={data.contactAddress || ''}
+                    onChange={(e) => setData({...data, contactAddress: e.target.value})}
+                    className="w-full p-3 rounded-lg border border-gray-200 outline-none focus:ring-2 focus:ring-[#01470b]"
+                    placeholder="Jl. Raya Pangan No. 88..."
+                  />
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-sm font-bold text-gray-700 mb-2">Nomor Telepon</label>
+                    <input 
+                      type="text"
+                      value={data.contactPhone || ''}
+                      onChange={(e) => setData({...data, contactPhone: e.target.value})}
+                      className="w-full p-3 rounded-lg border border-gray-200 outline-none focus:ring-2 focus:ring-[#01470b]"
+                      placeholder="+62 21 5555 8888"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-bold text-gray-700 mb-2">Email Kontak</label>
+                    <input 
+                      type="email"
+                      value={data.contactEmail || ''}
+                      onChange={(e) => setData({...data, contactEmail: e.target.value})}
+                      className="w-full p-3 rounded-lg border border-gray-200 outline-none focus:ring-2 focus:ring-[#01470b]"
+                      placeholder="info@panganmasabadi.co.id"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </section>
       </main>

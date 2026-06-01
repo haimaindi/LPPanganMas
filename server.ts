@@ -182,6 +182,10 @@ async function initDB() {
         mission_title TEXT NOT NULL,
         mission_content TEXT NOT NULL,
         portfolio_link TEXT,
+        footer_text TEXT,
+        contact_address TEXT,
+        contact_phone TEXT,
+        contact_email TEXT,
         updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
       )
     `);
@@ -190,6 +194,18 @@ async function initDB() {
       const tableInfo = await db.execute("PRAGMA table_info(company_profile)");
       if (!tableInfo.rows.some(row => row.name === 'portfolio_link')) {
         await db.execute("ALTER TABLE company_profile ADD COLUMN portfolio_link TEXT");
+      }
+      if (!tableInfo.rows.some(row => row.name === 'footer_text')) {
+        await db.execute("ALTER TABLE company_profile ADD COLUMN footer_text TEXT");
+      }
+      if (!tableInfo.rows.some(row => row.name === 'contact_address')) {
+        await db.execute("ALTER TABLE company_profile ADD COLUMN contact_address TEXT");
+      }
+      if (!tableInfo.rows.some(row => row.name === 'contact_phone')) {
+        await db.execute("ALTER TABLE company_profile ADD COLUMN contact_phone TEXT");
+      }
+      if (!tableInfo.rows.some(row => row.name === 'contact_email')) {
+        await db.execute("ALTER TABLE company_profile ADD COLUMN contact_email TEXT");
       }
     } catch(e) {}
 
@@ -200,8 +216,9 @@ async function initDB() {
         sql: `INSERT INTO company_profile (
           id, hero_title, hero_title_color, hero_subtitle, hero_subtitle_color, 
           hero_image, about_title, about_content, 
-          vision_title, vision_text, mission_title, mission_content
-        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+          vision_title, vision_text, mission_title, mission_content,
+          footer_text, contact_address, contact_phone, contact_email
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
         args: [
           "main",
           "Profil Perusahaan",
@@ -214,7 +231,11 @@ async function initDB() {
           "Visi Kami",
           "<p>Menjadi mitra terpercaya bagi petani Indonesia dalam mewujudkan kemandirian pangan melalui inovasi berkelanjutan dan penyediaan solusi pertanian terpadu.</p>",
           "Misi Kami",
-          "<ul><li>Mengembangkan teknologi pertanian yang adaptif dan efisien.</li><li>Menjamin ketersediaan sarana produksi pertanian berkualitas.</li><li>Memberikan edukasi dan pendampingan berkelanjutan bagi komunitas petani.</li><li>Membangun ekosistem distribusi pangan yang transparan dan adil.</li></ul>"
+          "<ul><li>Mengembangkan teknologi pertanian yang adaptif dan efisien.</li><li>Menjamin ketersediaan sarana produksi pertanian berkualitas.</li><li>Memberikan edukasi dan pendampingan berkelanjutan bagi komunitas petani.</li><li>Membangun ekosistem distribusi pangan yang transparan dan adil.</li></ul>",
+          "Mitra terpercaya dalam penyediaan kebutuhan pangan segar dan berkualitas untuk keluarga Indonesia.",
+          "Jl. Raya Pangan No. 88, Jakarta",
+          "+62 21 5555 8888",
+          "info@panganmasabadi.co.id"
         ]
       });
     }
@@ -485,7 +506,11 @@ app.get("/api/profile", async (req, res) => {
       visionText: row.vision_text,
       missionTitle: row.mission_title,
       missionContent: row.mission_content,
-      portfolioLink: row.portfolio_link
+      portfolioLink: row.portfolio_link,
+      footerText: row.footer_text || 'Mitra terpercaya dalam penyediaan kebutuhan pangan segar dan berkualitas untuk keluarga Indonesia.',
+      contactAddress: row.contact_address || 'Jl. Raya Pangan No. 88, Jakarta',
+      contactPhone: row.contact_phone || '+62 21 5555 8888',
+      contactEmail: row.contact_email || 'info@panganmasabadi.co.id',
     });
   } catch (error) {
     console.error("Profile Fetch Error:", error);
@@ -498,7 +523,8 @@ app.put("/api/profile", async (req, res) => {
     const { 
       heroTitle, heroTitleColor, heroSubtitle, heroSubtitleColor, 
       heroImage, aboutTitle, aboutContent, 
-      visionTitle, visionText, missionTitle, missionContent, portfolioLink 
+      visionTitle, visionText, missionTitle, missionContent, portfolioLink,
+      footerText, contactAddress, contactPhone, contactEmail
     } = req.body;
 
     await db.execute({
@@ -506,12 +532,13 @@ app.put("/api/profile", async (req, res) => {
         hero_title = ?, hero_title_color = ?, hero_subtitle = ?, hero_subtitle_color = ?, 
         hero_image = ?, about_title = ?, 
         about_content = ?, vision_title = ?, vision_text = ?, mission_title = ?, 
-        mission_content = ?, portfolio_link = ?, updated_at = CURRENT_TIMESTAMP 
+        mission_content = ?, portfolio_link = ?, footer_text = ?, contact_address = ?, contact_phone = ?, contact_email = ?, updated_at = CURRENT_TIMESTAMP 
       WHERE id = 'main'`,
       args: [
         heroTitle, heroTitleColor, heroSubtitle, heroSubtitleColor, 
         heroImage, aboutTitle, aboutContent, 
-        visionTitle, visionText, missionTitle, missionContent, portfolioLink
+        visionTitle, visionText, missionTitle, missionContent, portfolioLink,
+        footerText, contactAddress, contactPhone, contactEmail
       ]
     });
     res.json({ message: "Profile updated" });
